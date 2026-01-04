@@ -4,6 +4,7 @@ import cors from "cors";
 import path from "path";
 import admin_route from "./src/routes/admin_route.js";
 import notes_route from "./src/routes/notes_route.js";
+import user_route from "./src/routes/user_route.js";
 
 const app = express();
 dotenv.config();
@@ -25,6 +26,7 @@ app.get("/",(req,res)=>{
 
 app.use("/admin",admin_route);
 app.use("/notes",notes_route);
+app.use("/user/",user_route);
 
 app.listen(PORT,()=>{
   console.log(`Server is running on port ${PORT}`);
