@@ -1,9 +1,14 @@
 import multer from "multer";
 import multerConfig from "../config/multerConfig.js";
 
-// Create a Multer instance using config
-export const upload = multer({
+export const uploadPDF = multer({
   storage: multerConfig.storage,
-  fileFilter: multerConfig.fileFilter,
-  limits: { fileSize: 10 * 1024 * 1024 }, // optional: 10MB max
+  fileFilter: multerConfig.fileFilter, 
+  limits: { fileSize: 10 * 1024 * 1024 },
+});
+
+export const uploadFile = multer({
+  storage: multerConfig.storage,
+  fileFilter: multerConfig.imageOrPdfFilter,  
+  limits: { fileSize: 10 * 1024 * 1024 },
 });

@@ -18,7 +18,7 @@ export const loginAdmin = async (req, res) => {
     const token = jwt.sign(
       { id: response.id, email: response.email },
       process.env.JWT_SECRET,
-      { expiresIn: "24h" }
+      { expiresIn: "7d" }
     );
     return res.status(200).json({ message: "Logged in successfully", token });
   } catch (error) {

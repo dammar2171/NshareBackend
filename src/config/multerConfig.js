@@ -2,13 +2,11 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-// Ensure uploads folder exists
 const uploadDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
-// Storage configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadDir);
@@ -19,8 +17,8 @@ const storage = multer.diskStorage({
   },
 });
 
-// File filter: only PDFs allowed
-const fileFilter = (req, file, cb) => {
+// for notes — PDF only
+const pdfFilter = (req, file, cb) => {
   if (file.mimetype === "application/pdf") {
     cb(null, true);
   } else {
@@ -28,5 +26,14 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// Export storage + filter
-export default { storage, fileFilter };
+// for notices — image or PDF
+const imageOrPdfFilter = (req, file, cb) => {
+  const allowed = ["image/jpeg", "image/png", "image/jpg", "image/webp", "application/pdf"];
+  if (allowed.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only images and PDFs allowed"), false);
+  }
+};
+
+export default { storage, fileFilter: pdfFilter, imageOrPdfFilter };
